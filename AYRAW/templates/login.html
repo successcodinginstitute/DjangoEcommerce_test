@@ -1,7 +1,10 @@
 
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% comment %} <!DOCTYPE html>
+<html lang="en"> {% endcomment %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,4 +88,9 @@
     });
 </script>
 </body>
-</html>
+{% comment %} </html> {% endcomment %}
+{% endblock %}
+{% comment %} </html> {% endcomment %}
+{% block footer %}
+    {# Empty block = no footer shown #}
+{% endblock %}
