@@ -298,7 +298,37 @@ def payment(request):
     }
     return render(request, 'payment.html', context)
 
+# def order_success(request):
+#     return render(request, 'order_success.html')
+
+from django.core.mail import send_mail
+from django.conf import settings
+
 def order_success(request):
+    if request.user.is_authenticated:
+        # Get the latest order for the user
+        latest_order = Order.objects.filter(user=request.user).order_by('-order_date').first()
+        
+        if latest_order:
+            subject = 'Order Confirmation - AYRA'
+            message = f"""
+            Hello {request.user.username},
+            
+            Thank you for your purchase!
+            Your order (Order ID: {latest_order.id}) has been placed successfully.
+
+            Product: {latest_order.product.name}
+            Total Price: ₹{latest_order.total_price}
+            Status: {latest_order.status}
+
+            We will notify you once your order is shipped.
+            """
+
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [request.user.email]
+
+            send_mail(subject, message, from_email, recipient_list)
+
     return render(request, 'order_success.html')
 
 def moisturizer_detail(request):
