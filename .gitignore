@@ -17,7 +17,6 @@ ENV/
 *.pyc
 local_settings.py
 db.sqlite3
-media/
 staticfiles/
 
 # VSCode settings (if you use it)
