@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<!-- Hero Section -->
+<section class="hero-section text-center" style="background: linear-gradient(to right, #ff99cc, #cc99ff);  padding: 80px 0; position: relative; ">
+    <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.2);"></div>
+    <div class="hero-content position-relative container">
+        <h1 class="display-4 fw-bold text-white">About <span class="highlight text-white">AIRA</span></h1>
+        <p class="lead text-white">Your journey to glowing skin begins here.</p>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="why-choose-us py-5">
+    <div class="container">
+        <div class="row d-flex align-items-center flex-md-row flex-column-reverse">
+            <div class="col-md-6 fade-in text-content">
+                <h2 class="fw-bold">Why Choose <span class="highlight">AIRA?</span></h2>
+                <p>At AIRA, we are committed to <strong>excellence and innovation</strong> in skincare. Our products are designed with scientifically proven formulas, <strong>infused with natural ingredients</strong>, ensuring that your skin gets the best care possible.</p>
+                <ul class="list-unstyled mt-3">
+                    <li><i class="fas fa-leaf text-success"></i> Natural & Organic Ingredients</li>
+                    <li><i class="fas fa-flask text-primary"></i> Dermatologist Tested</li>
+                    <li><i class="fas fa-check-circle text-info"></i> 100% Cruelty-Free</li>
+                    <li><i class="fas fa-recycle text-warning"></i> Sustainable & Eco-Friendly</li>
+                </ul>
+            </div>
+            <div class="col-md-6 fade-in text-center">
+                <img src="{% static 'images/aboutus.jpg' %}" class="img-fluid rounded shadow-lg" style="max-width: 65%; border-radius: 20px;" alt="Why Choose AIRA">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Vision & Approach -->
+<section class="our-vision py-5 bg-light text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 fade-in">
+                <h2>Our <span class="highlight">Vision</span></h2>
+                <p>We believe in <strong>empowering individuals</strong> with high-quality skincare solutions that promote <strong>confidence, beauty, and well-being</strong>.</p>
+            </div>
+            <div class="col-md-6 fade-in">
+                <h2>Our <span class="highlight">Approach</span></h2>
+                <p>With a focus on <strong>innovation and sustainability</strong>, we create products that deliver visible results while maintaining the highest ethical standards.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Process -->
+<section class="our-process py-5 text-center">
+    <div class="container">
+        <h2 class="fade-in fw-bold">Our <span class="highlight">Process</span></h2>
+        <p class="fade-in">We follow a <strong>scientific and holistic</strong> approach to skincare:</p>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-4 fade-in">
+                <div class="process-card p-4 shadow rounded bg-white">
+                    <i class="fas fa-search icon-style text-warning" style="font-size: 2rem;"></i>
+                    <h3 class="mt-3">Research & Innovation</h3>
+                    <p>Our team of <strong>experts</strong> and dermatologists work together to create unique, high-quality formulations.</p>
+                </div>
+            </div>
+            <div class="col-md-4 fade-in">
+                <div class="process-card p-4 shadow rounded bg-white">
+                    <i class="fas fa-seedling icon-style text-success" style="font-size: 2rem;"></i>
+                    <h3 class="mt-3">Natural Ingredients</h3>
+                    <p>We carefully select <strong>organic</strong> and skin-friendly ingredients to ensure maximum effectiveness.</p>
+                </div>
+            </div>
+            <div class="col-md-4 fade-in">
+                <div class="process-card p-4 shadow rounded bg-white">
+                    <i class="fas fa-gem icon-style text-info" style="font-size: 2rem;"></i>
+                    <h3 class="mt-3">Quality & Testing</h3>
+                    <p>All our products go through <strong>rigorous testing</strong> to maintain the highest safety and performance standards.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Zigzag Layout Section -->
+<section class="zigzag-section py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <img src="{% static 'images/aboutus2.jpg' %}" class="img-fluid rounded shadow-lg" style="max-width: 65%; border-radius: 20px;" alt="Our Commitment">
+            </div>
+            <div class="col-md-6">
+                <h2 class="fw-bold">Our <span class="highlight">Commitment</span></h2>
+                <p>We are dedicated to providing high-quality products that enhance your beauty and well-being. Our commitment to sustainability and ethical practices is at the core of our business.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="call-to-action py-5 text-center" style="background: linear-gradient(to right, #ff99cc, #cc99ff); color: white;">
+    <h2 class="fw-bold">Ready to Transform Your Skin?</h2>
+    <a href="/" class="btn btn-light btn-lg mt-3 shadow">Explore Our Products</a>
+</section>
+
+{% endblock %}

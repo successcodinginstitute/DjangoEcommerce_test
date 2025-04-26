@@ -1,0 +1,11 @@
+1: Add to cart-- Done
+2: wish list-- Done
+3: email functionalities-- In Progress
+4: register new user-- Done
+5: payment page : work with network (tentative) 
+6: add same layout on every page -- Done
+7: add logout button -- Done
+8: blogs page remove other options-- Done
+9: Aplication is static and need to fecth data from database-- Done
+10: by clicking on shop all, show all products --Done
+11: Profile page  --Done

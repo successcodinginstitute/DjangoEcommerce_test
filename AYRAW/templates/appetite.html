@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<style>
+
+
+
+.product-container {
+    display: flex;
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.image-section img {
+    width: 400px;
+    border-radius: 15px;
+}
+
+.info-section {
+    padding-left: 2rem;
+    max-width: 600px;
+}
+
+.badge {
+    background-color: #ff004f;
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.info-section h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.ratings span {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+.reduces span, .tags span {
+    display: inline-block;
+    margin-right: 10px;
+    background-color: #ffd6eb;
+    padding: 0.4rem 0.8rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.skin-type {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.price small {
+    font-weight: normal;
+    font-size: 0.9rem;
+    color: #666;
+    display: block;
+}
+
+.add-to-cart {
+    margin-top: 20px;
+    background-color: black;
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #222;
+}
+
+
+
+/* Existing CSS (unchanged part skipped for brevity) */
+
+.slider-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.slider {
+    display: flex;
+    width: 1200px; /* 3 images * 400px each */
+    transition: transform 0.4s ease-in-out;
+}
+
+.slider img {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+/* Navigation buttons */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 2rem;
+    padding: 0 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* Optional: responsive tweaks */
+@media (max-width: 768px) {
+    .product-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .slider-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .slider img {
+        width: 100%;
+        height: auto;
+    }
+
+    .info-section {
+        padding-left: 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+}
+
+
+
+</style>
+
+
+    <div class="product-container">
+        <!-- Slider Section -->
+        <div class="slider-container">
+            <div class="slider" id="imageSlider">
+                <img src="{% static 'images/moisturizer .jpg' %}" alt="Moisturizer Image 1">
+                <img src="{% static 'images/moisturizer1.jpg' %}" alt="Moisturizer Image 2">
+                <img src="{% static 'images/moisturizer2.jpg' %}" alt="Moisturizer Image 3">
+            </div>
+            <button class="prev" onclick="slide(-1)">&#10094;</button>
+            <button class="next" onclick="slide(1)">&#10095;</button>
+        </div>
+
+        <!-- Product Info -->
+        <div class="info-section">
+            <span class="badge">JUST IN</span>
+            <h1>Fat Burner Herbal Tea with Garcinia & Ginger</h1>
+            <div class="ratings">
+                <span>⭐⭐⭐⭐⭐</span> <span>10 verified ratings</span>
+            </div>
+            <p class="reduces">Reduces: <span>Excess Oil</span> <span>Puffiness</span></p>
+            <p class="tags">
+                <span>With Niacinamide</span>
+                <span>Soothing</span>
+                <span>Refreshing</span>
+            </p>
+            <p class="skin-type">Normal, Oily & Combination Skin</p>
+            <div class="price">₹495 <small>MRP incl. of all taxes</small></div>
+            <button class="add-to-cart">ADD TO CART</button>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const slider = document.getElementById('imageSlider');
+        const totalSlides = slider.children.length;
+
+        function slide(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = totalSlides - 1;
+            if (currentIndex >= totalSlides) currentIndex = 0;
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 30px 0 10px;
+    }
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 20px;
+    }
+    .carousel {
+      display: flex;
+      gap: 20px;
+      min-width: 100%;
+    }
+    .product-card {
+      min-width: 250px;
+      max-width: 250px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+    .product-card:hover {
+      transform: scale(1.02);
+    }
+    .product-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ff69b4;
+      color: white;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      z-index: 1;
+    }
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    .product-info {
+      padding: 15px;
+      flex-grow: 1;
+    }
+    .product-info h3 {
+      font-size: 14px;
+      margin: 0 0 8px;
+    }
+    .product-info p {
+      font-size: 12px;
+      color: #555;
+      margin: 2px 0;
+    }
+    .badge {
+      background-color: #ff1493;
+      color: #fff;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 11px;
+      display: inline-block;
+      margin: 5px 5px 0 0;
+    }
+    .discount-badge {
+      background-color: #ffe6f0;
+      color: #ff1493;
+    }
+    .rating {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+    .rating i {
+      color: #ffc107;
+      margin-right: 4px;
+    }
+    .price {
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .add-to-cart {
+      background: black;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="section-title">New Arrivals</div>
+
+<div class="carousel-container">
+  <div class="carousel">
+    {% for product in products %}
+        <a href="{% url 'product_detail' product.id %}" style="text-decoration: none; color: inherit;">  
+        <div class="product-card"> <!-- Use <div> instead of <a> as container -->
+            <div class="product-tag">JUST IN 💗</div>
+            <div class="product-img">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            <div class="product-info">
+                <h4>{{ product.name }}</h4>
+                <p class="desc">{{ product.description|truncatewords:15 }}</p>
+                <div class="rating"><i class="fas fa-star"></i> {{ product.rating }} ({{ product.reviews }})</div>
+                <span class="badge discount-badge">Flat {{ product.discount }}% OFF</span>
+                <div class="price">₹{{ product.price }}</div>
+                <a href="{% url 'add_to_cart' product.id %}">
+                    <div class="add-to-cart">ADD TO CART</div>
+                </a>
+                {% comment %} <div class="add-to-cart" data-product-id="{{ product.id }}">ADD TO CART</div> {% endcomment %}
+            </div>
+        </div>
+      {% endfor %}  
+    {% comment %} <!-- Product 1 -->
+    <a href="/moisturizer" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/Moisturizer .jpg' %}" alt="Watermelon Moisturizer">
+      <div class="product-info">
+        <h3>Watermelon Cooling Icy Gel Moisturizer</h3>
+        <p>Normal, Oily & Combination Skin</p>
+        <p><i class="fas fa-heart"></i> Normal, Oily & Combination Skin</p>
+        <div class="rating">
+          <i class="fas fa-star"></i> 4.6 (10)
+        </div>
+        <span class="badge">60g</span>
+        <span class="badge discount-badge">Flat 15% OFF</span>
+        <div class="price">₹495</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a>
+
+    <!-- Product 2 -->
+    <a href="/serum" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/serum.jpg' %}" alt="Barrier Boost Serum">
+      <div class="product-info">
+        <h3>12% Barrier Boost Serum With Ceramides + Niacinamide</h3>
+        <p>All Skin Types</p>
+        <p><i class="fas fa-heart"></i> All Skin Types</p>
+        <div class="rating">
+          <i class="fas fa-star"></i> 4.5 (58)
+        </div>
+        <span class="badge">30ml</span>
+        <span class="badge discount-badge">Flat 15% OFF</span>
+        <div class="price">₹599</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a>
+
+    <!-- Product 3 -->
+    <a href="/sheetmask" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/sheetmask.jpg' %}" alt="Pomegranate Serum">
+      <div class="product-info">
+        <h3>Pomegranate Youth 0.2% Retinol Complex Face Serum</h3>
+        <p>All Skin Types</p>
+        <p><i class="fas fa-heart"></i> All Skin Types</p>
+        <div class="rating">
+          <i class="fas fa-star"></i> 4.6 (67)
+        </div>
+        <span class="badge">30ml</span>
+        <span class="badge discount-badge">Flat 15% OFF</span>
+        <div class="price">₹599</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a> 
+
+    <!-- Product 4 -->
+    <a href="/sunscreen" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/sunscreen .jpg' %}" alt="Mango Sunscreen">
+      <div class="product-info">
+        <h3>Mango + Detan Gel Sunscreen (Oil Free), SPF 50+ PA+++</h3>
+        <p>For All Skin Types</p>
+        <p><i class="fas fa-heart"></i> For All Skin Types</p>
+        <div class="rating">
+          <i class="fas fa-star"></i> 4.6 (63)
+        </div>
+        <span class="badge">80g</span>
+        <span class="badge discount-badge">Flat 15% OFF</span>
+        <div class="price">₹595</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a>
+
+    <!-- Product 5 -->
+    <a href="/toner" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/toner.jpg' %}" alt="Hydrating Toner">
+      <div class="product-info">
+        <h3>Hydrating Toner With Hyaluronic Acid</h3>
+        <p>Dry & Sensitive Skin</p>
+        <p><i class="fas fa-heart"></i> Dry & Sensitive Skin</p>
+        <div class="rating">
+          <i class="fas fa-star"></i> 4.7 (23)
+        </div>
+        <span class="badge">120ml</span>
+        <span class="badge discount-badge">Flat 10% OFF</span>
+        <div class="price">₹425</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a>
+
+    <!-- Product 6 -->
+    <a href="/cleanser" class="product-card">
+        <div class="product-tag">JUST IN 💗</div>
+        <img src="{% static 'images/cleanser.jpg' %}" alt="Pomegranate Serum">
+        <div class="product-info">
+          <h3>Pomegranate Youth 0.2% Retinol Complex Face Serum</h3>
+          <p>All Skin Types</p>
+          <p><i class="fas fa-heart"></i> All Skin Types</p>
+          <div class="rating">
+            <i class="fas fa-star"></i> 4.6 (67)
+          </div>
+          <span class="badge">30ml</span>
+          <span class="badge discount-badge">Flat 15% OFF</span>
+          <div class="price">₹599</div>
+        </div>
+        <div class="add-to-cart">ADD TO CART</div>
+      </a> {% endcomment %}
+    
+
+  </div>
+</div>
+
+{% endblock %}

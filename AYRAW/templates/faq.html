@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<style>
+.faq-body {
+    background-color: #ffeef3; /* Silent Pink */
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.faq-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.faq-categories {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.faq-icon {
+    display: inline-block;
+    margin: 0 15px;
+    text-decoration: none;
+    color: #888;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.faq-icon.active, .faq-icon:hover {
+    color: #e91e63;
+    transform: scale(1.1);
+}
+
+.faq-list details {
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 15px 20px;
+    cursor: pointer;
+}
+
+.faq-list summary {
+    font-weight: 600;
+    font-size: 17px;
+    outline: none;
+}
+
+.faq-list p {
+    margin-top: 10px;
+    color: #555;
+}
+
+
+</style>
+
+    <div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+        <p>Select A Category</p>
+        <div class="faq-categories">
+            <a href="?category=product" class="faq-icon {% if category == 'product' %}active{% endif %}">🧴<br>Product</a>
+            <a href="?category=order" class="faq-icon {% if category == 'order' %}active{% endif %}">📦<br>Order</a>
+            <a href="?category=payment" class="faq-icon {% if category == 'payment' %}active{% endif %}">💳<br>Payment</a>
+        </div>
+
+        <div class="faq-list">
+            {% for faq in faqs %}
+                <details>
+                    <summary>{{ faq.question }}</summary>
+                    <p>{{ faq.answer }}</p>
+                </details>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

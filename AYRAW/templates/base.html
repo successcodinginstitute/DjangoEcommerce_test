@@ -1,0 +1,376 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AYRA - Premium skincare and beauty products">
+  <title>AYRA - Beauty & Skincare</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.5.1/SmoothScroll.min.js" integrity="sha512-BkMKSo7sGBeDmtIyZoyInJbrI/XqQ1ez6SZotOL0e+iT6tzOjBmtMpWWPUVbcdqLbaukREItSDV2aohX+9gBlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    /* Top section */
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #000;
+    }
+    
+    .search-bar {
+      flex-grow: 1;
+      max-width: 500px;
+      margin: 0 20px;
+    }
+    
+    .search-bar form {
+      display: flex;
+    }
+    
+    .search-bar input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      font-size: 14px;
+    }
+    
+    .search-bar button {
+      padding: 10px 15px;
+      background: #000;
+      color: white;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+    
+    .nav-icons a {
+      margin-left: 20px;
+      color: #000;
+      font-size: 18px;
+      position: relative;
+      text-decoration: none;
+    }
+    
+    .cart-count {
+      background: black;
+      color: white;
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 50%;
+      position: absolute;
+      top: -8px;
+      right: -10px;
+    }
+    
+    /* Navigation */
+    .navbar-nav .dropdown-menu {
+      border: none;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .nav-link {
+      font-weight: 600;
+      padding: 10px 15px;
+    }
+    
+    /* Footer Styling */
+    .footer {
+      background: linear-gradient(to right, #e6a7e6, #a7c7e7);
+      padding: 40px 20px;
+      color: white;
+    }
+    
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .footer-logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      border-radius: 50%;
+    }
+    
+    .footer ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .footer ul li {
+      margin: 8px 0;
+    }
+    
+    .footer ul li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+      font-weight: 500;
+    }
+    
+    .footer ul li a:hover {
+      color: #000000;
+      text-decoration: underline;
+    }
+    
+    .social-icons a {
+      margin: 0 10px;
+      color: white;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+    
+    .social-icons a:hover {
+      color: #000000;
+    }
+    
+    .footer-bottom {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.9rem;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .ayra-logo {
+      font-size: 32px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .top-row {
+        flex-direction: column;
+        padding: 10px;
+      }
+      
+      .search-bar {
+        width: 100%;
+        margin: 10px 0;
+      }
+      
+      .nav-icons {
+        margin-top: 10px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center; /* Align vertically */
+      justify-content: space-between; /* Space between icons */
+    }
+    
+    .nav-icons a,
+    .nav-icons li {
+      margin: 0 10px; /* Adjust the space between the icons */
+      display: inline-block;
+    }
+    
+    .nav-icons i {
+      font-size: 1.5rem; /* Adjust the icon size if needed */
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Top Search and Icons Row -->
+  <div class="top-row">
+    <a href="{% url 'home' %}" class="logo">AYRA</a>
+    <div class="search-bar">
+      <form method="GET" action="{% url 'search_products' %}">
+        <input type="text" name="q" placeholder="Search products...">
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+    <div class="nav-icons">
+      <a href="{% url 'shipping_policy' %}"><i class="fas fa-truck"></i></a>
+      <a href="/wishlist"><i class="fas fa-gift"></i></a>
+      
+      {% comment %} <a href="/cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a> {% endcomment %}
+      <a href="{% url 'cart_view' %}">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">{{ cart_count }}</span>
+      </a>
+      {% comment %} <a href="/login"><i class="fas fa-user"></i></a> {% endcomment %}
+      {% comment %} <a href="/profile"><i class="fas fa-user"></i></a> {% endcomment %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-user"></i>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+          {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'profile' %}">Edit Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+            <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </li>
+
+    </div>
+  </div>
+  
+  <!-- Navigation Menu -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'all_products' %}">SHOP ALL</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              BEAUTY CATEGORIES
+            </a>
+            {% comment %} <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'skincare' %}">Skin Care</a></li>
+              <li><a class="dropdown-item" href="{% url 'scalpcare' %}">Scalp Care</a></li>
+              <li><a class="dropdown-item" href="{% url 'weightloss' %}">Weight Loss</a></li>
+            </ul> {% endcomment %}
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {% for category in nav_categories %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'category_products' category.id %}">
+                    {{ category.name }}
+                  </a>
+                </li>
+              {% endfor %}
+
+            </ul>  
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/blog_list">BLOGS</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Success/Error Messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+  
+  <!-- Main Content Block -->
+  {% block 'main' %}{% endblock 'main' %}
+
+  {% block footer %}
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <img src="{% static 'images/ayralogo.jpg' %}" alt="AYRA Logo" class="footer-logo">
+        <p>AYRA Online Shop</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>CATEGORY</h3>
+        <ul>
+          <li><a href="{% url 'skincare' %}"  style="text-decoration: none;">Skin Care</a></li>
+          <li><a href="{% url 'scalpcare' %}" style="text-decoration: none;">Scalp Care</a></li>
+          <li><a href="{% url 'weightloss' %}" style="text-decoration: none;">Weightloss</a></li>
+          <li><a href="{% url 'all_products' %}" style="text-decoration: none;">All Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>ABOUT</h3>
+        <ul>
+          <li><a href="/about" style="text-decoration: none;">About AYRA</a></li>
+          <li><a href="#" style="text-decoration: none;">Company Profile</a></li>
+          <li><a href="/contact" style="text-decoration: none;">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Grateful Mind Corporation. All Rights Reserved.</p>
+    </div>
+  </footer>
+  {% endblock %}
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Initialize tooltips
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+      
+      // Auto-dismiss alerts after 5 seconds
+      var alerts = document.querySelectorAll('.alert');
+      alerts.forEach(function(alert) {
+        setTimeout(function() {
+          bootstrap.Alert.getInstance(alert).close();
+        }, 5000);
+      });
+      
+      // Cart count update example (replace with your actual cart logic)
+      function updateCartCount() {
+        // This is just an example - replace with your actual cart count logic
+        fetch('/api/cart-count/')
+          .then(response => response.json())
+          .then(data => {
+            document.querySelector('.cart-count').textContent = data.count;
+          });
+      }
+      
+      // Call this when cart changes
+      // updateCartCount();
+    });
+  </script>
+</body>
+</html>

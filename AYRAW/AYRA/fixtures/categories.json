@@ -1,0 +1,23 @@
+[
+    {
+        "model": "AYRA.category",
+        "pk": 1,
+        "fields": {
+            "name": "Sunscreens"
+        }
+    },
+    {
+        "model": "AYRA.category",
+        "pk": 2,
+        "fields": {
+            "name": "Skin Care"
+        }
+    },
+    {
+        "model": "AYRA.category",
+        "pk": 3,
+        "fields": {
+            "name": "Routine"
+        }
+    }
+]

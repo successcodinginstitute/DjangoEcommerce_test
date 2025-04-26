@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<section class="container py-5">
+    <h2 class="text-center mb-4 fw-bold">📖 User Guide</h2>
+    <p class="text-center text-muted">Click on a section to learn more</p>
+
+    <div class="row g-4">
+        <!-- ORDERING HELP -->
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center border-0 p-3" data-bs-toggle="modal" data-bs-target="#orderingModal">
+                <h4 class="fw-bold">📦 Ordering Help</h4>
+                <p class="text-muted">How to order, tracking & more</p>
+            </div>
+        </div>
+
+        <!-- PAYMENT HELP -->
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center border-0 p-3" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                <h4 class="fw-bold">💳 Payment Help</h4>
+                <p class="text-muted">Payment options & refund policy</p>
+            </div>
+        </div>
+
+        <!-- SHIPPING HELP -->
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center border-0 p-3" data-bs-toggle="modal" data-bs-target="#shippingModal">
+                <h4 class="fw-bold">🚚 Shipping Help</h4>
+                <p class="text-muted">Shipping, delivery & returns</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ORDERING HELP MODAL -->
+<div class="modal fade" id="orderingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">📦 Ordering Help</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h5>How to Order 🛍️</h5>
+                <p>Browse products, add them to your cart, and checkout.</p>
+                <h5>Track Your Order 🚀</h5>
+                <p>Use the tracking number sent via email after shipping.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAYMENT HELP MODAL -->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">💳 Payment Help</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Payment Methods 💰</h5>
+                <p>We accept Credit/Debit Cards, UPI, Net Banking, and Wallet payments.</p>
+                <h5>Refund Policy 🔄</h5>
+                <p>Refunds are processed within 5-7 business days.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SHIPPING HELP MODAL -->
+<div class="modal fade" id="shippingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">🚚 Shipping Help</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Shipping Information ✈️</h5>
+                <p>Standard and express shipping options are available.</p>
+                <h5>Return Process ↩️</h5>
+                <p>To return an item, go to 'My Orders' and select 'Return Item'.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    .card:hover {
+        transform: scale(1.05);
+        background-color: #f8f9fa;
+    }
+</style>
+
+{% endblock %}

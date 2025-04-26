@@ -1,0 +1,74 @@
+<!-- templates/AYRA/product_detail.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %} {% block content %} {% endcomment %}
+{% block 'main' %}
+<style>
+
+  .product-img {
+      width: 200px; /* or whatever size you want */
+      height: 200px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f9f9f9; /* Optional: adds a background */
+      border-radius: 8px;         /* Optional: rounded corners */
+  }
+  
+  .product-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+  }
+  
+</style>
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ product.name }} - Product Detail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head> {% endcomment %}
+
+<body class="bg-gray-100 text-gray-900">
+
+  <div class="max-w-4xl mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="md:flex">
+      <!-- Product Image -->
+      {% comment %} <div class="md:w-1/2 p-4">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-80 object-cover rounded">
+      </div>
+       {% endcomment %}
+     {% comment %} <div class="w-64 sm:w-80 h-64 sm:h-80 bg-gray-100 rounded overflow-hidden mx-auto"> {% endcomment %}
+    <div class="product-img">
+      <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-contain">
+    </div>
+       
+      
+      <!-- Product Details -->
+      <div class="md:w-1/2 p-6">
+        <h2 class="text-3xl font-bold mb-4">{{ product.name }}</h2>
+        <p class="text-xl text-green-600 font-semibold mb-4">₹{{ product.price }}</p>
+        <p class="text-gray-700 mb-6">{{ product.description }}</p>
+
+        {% comment %} <a href="{% url 'place_order' %}" class="bg-blue-600 text-blue px-6 py-2 rounded hover:bg-blue-700 transition">
+          Buy Now
+        </a> {% endcomment %}
+        <div class="action-buttons">
+          <a href="{% url 'add_to_cart' product.id %}" style="text-decoration: none;">
+            <div class="add-to-cart">
+              Buy Now
+            </div>
+          </a>
+         </div>
+
+      </div>
+    </div>
+  </div>
+
+{% comment %} </body>
+</html> {% endcomment %}
+{% endblock %}

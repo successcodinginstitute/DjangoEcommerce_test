@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<div class="container my-5">
+    <h2 class="text-center fw-bold">🛒 My Cart</h2>
+
+    <div class="row">
+        <!-- Cart Items Section -->
+        <div class="col-md-8">
+            {% if cart_items %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for item in cart_items %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 rounded">
+                        <img src="{{ item.product.image.url }}" class="card-img-top rounded-top" alt="{{ item.product.name }}" style="height: 220px; object-fit: cover;">
+                        
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">{{ item.product.name }}</h5>
+                            <p class="text-primary fw-semibold">₹{{ item.product.price }}</p>
+                            
+                            <!-- Quantity Update Section -->
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <a href="{% url 'update_qty' item.product.id 0 %}" class="btn btn-sm btn-outline-secondary">-</a>
+                                <span class="fw-bold">{{ item.quantity }}</span>
+                                <a href="{% url 'update_qty' item.product.id 1 %}" class="btn btn-sm btn-outline-secondary">+</a>
+                            </div>
+
+                            <p class="fw-bold mt-2">Total: ₹{{ item.product.price|floatformat:2 }} × {{ item.quantity }} = ₹{{ item.total_price|floatformat:2 }}</p>
+                            
+                            <!-- Action Buttons -->
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{% url 'product_detail' item.product.id %}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Remove
+                                </a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <div class="text-center mt-4">
+                    <p class="text-muted">Your cart is empty. 🛒💔</p>
+                    <a href="{% url 'home' %}" class="btn btn-primary">Continue Shopping</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Price Summary Section -->
+        {% if cart_items %}
+        <div class="col-md-4">
+            <div class="p-4 shadow rounded bg-light">
+                <h4 class="fw-bold">Price Details</h4>
+                <hr>
+                <p><strong>Price ({{ cart_count }} items)</strong>: ₹{{ cart_total }}</p>
+                <p><strong>Delivery Charges</strong>: <span class="text-success">Free</span></p>
+                <h5 class="fw-bold text-success">Total Amount: ₹{{ cart_total }}</h5>
+                <a href="{% url 'place_order' %}" class="btn btn-danger w-100 mt-3">PLACE ORDER</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

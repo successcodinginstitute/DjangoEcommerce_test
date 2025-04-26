@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<style>
+.success-container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.success-container h2 {
+    color: hotpink;
+    margin-bottom: 20px;
+}
+.success-container p {
+    font-size: 14px;
+}
+</style>
+
+<div class="success-container">
+    <h2>Order Placed Successfully!</h2>
+    <p>Thank you for your purchase. We’re processing your order now.</p>
+</div>
+
+{% endblock %}

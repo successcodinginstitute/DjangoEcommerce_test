@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 30px 0 10px;
+    }
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 20px;
+    }
+    .carousel {
+      display: flex;
+      gap: 20px;
+      min-width: 100%;
+    }
+    .product-card {
+      min-width: 250px;
+      max-width: 250px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+    .product-card:hover {
+      transform: scale(1.02);
+    }
+    .product-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ff69b4;
+      color: white;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      z-index: 1;
+    }
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    .product-info {
+      padding: 15px;
+      flex-grow: 1;
+    }
+    .product-info h3 {
+      font-size: 14px;
+      margin: 0 0 8px;
+    }
+    .product-info p {
+      font-size: 12px;
+      color: #555;
+      margin: 2px 0;
+    }
+    .badge {
+      background-color: #ff1493;
+      color: #fff;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 11px;
+      display: inline-block;
+      margin: 5px 5px 0 0;
+    }
+    .discount-badge {
+      background-color: #ffe6f0;
+      color: #ff1493;
+    }
+    .rating {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+    .rating i {
+      color: #ffc107;
+      margin-right: 4px;
+    }
+    .price {
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .add-to-cart {
+      background: black;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      cursor: pointer;
+    }
+  </style>
+
+
+<div class="section-title">New Arrivals - Weight Loss</div>
+
+<div class="carousel-container">
+  <div class="carousel">
+
+    <!-- Product 1 -->
+    <a href="/fatburnercapsule" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/fat burner capsule.jpg' %}" alt="Green Tea Capsules">
+      <div class="product-info">
+        <h3>Green Tea Extract Capsules for Metabolism Support</h3>
+        <p>Supports fat burn & digestion</p>
+        <div class="rating"><i class="fas fa-star"></i> 4.6 (60)</div>
+        <span class="badge">60 Capsules</span>
+        <span class="badge discount-badge">Flat 10% OFF</span>
+        <div class="price">₹799</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a>
+
+    <!-- Product 2 -->
+    <a href="/weightloss_coffee" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/weightloss.jpg' %}" alt="Apple Cider Vinegar Gummies">
+      <div class="product-info">
+        <h3>Apple Cider Vinegar Gummies with Vitamin B12</h3>
+        <p>Helps curb appetite & detox</p>
+        <div class="rating"><i class="fas fa-star"></i> 4.5 (48)</div>
+        <span class="badge">30 Gummies</span>
+        <span class="badge discount-badge">Flat 15% OFF</span>
+        <div class="price">₹599</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a>
+
+    <!-- Product 3 -->
+    <a href="/appetite" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/appetite .jpg' %}" alt="Fat Burner Tea">
+      <div class="product-info">
+        <h3>Fat Burner Herbal Tea with Garcinia & Ginger</h3>
+        <p>Boosts metabolism & energy</p>
+        <div class="rating"><i class="fas fa-star"></i> 4.7 (72)</div>
+        <span class="badge">100g</span>
+        <span class="badge discount-badge">Flat 20% OFF</span>
+        <div class="price">₹499</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a>
+
+    <!-- Product 4 -->
+    <a href="/metabolism boost" class="product-card">
+      <div class="product-tag">JUST IN 💗</div>
+      <img src="{% static 'images/metabolism boost.jpg' %}" alt="Keto Weight Loss Drops">
+      <div class="product-info">
+        <h3>Keto Weight Loss Drops with BHB & Green Coffee</h3>
+        <p>Supports ketosis & appetite control</p>
+        <div class="rating"><i class="fas fa-star"></i> 4.4 (39)</div>
+        <span class="badge">50ml</span>
+        <span class="badge discount-badge">Flat 18% OFF</span>
+        <div class="price">₹699</div>
+      </div>
+      <div class="add-to-cart">ADD TO CART</div>
+    </a>
+
+  </div>
+</div>
+
+
+
+
+{% endblock %}

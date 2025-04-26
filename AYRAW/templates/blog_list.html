@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<style>
+
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter-tabs button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.filter-tabs .active {
+    background: hotpink;
+    color: white;
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.card .category {
+    display: inline-block;
+    padding: 2px 10px;
+    border: 1px solid hotpink;
+    color: hotpink;
+    font-size: 12px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.card h4 {
+    color: #ff1cae;
+    margin: 10px 0 5px;
+    font-size: 14px;
+}
+
+.card p {
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.card small {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.read-more {
+    background: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+</style>
+
+<div class="filter-tabs">
+    <button class="active">Trending</button>
+    {% comment %} <button>Sunscreens</button>
+    <button>Skin Care</button>
+    <button>Routine</button> {% endcomment %}
+</div>
+
+{% comment %} <div class="blog-grid">
+    {% for post in posts %}
+    <div class="card">
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        <span class="category">{{ post.category }}</span>
+        <h4>{{ post.title|upper }}</h4>
+        <p>{{ post.description|truncatewords:20 }}</p>
+        <small>{{ post.author }} | {{ post.date }}</small>
+        <a href="#" class="read-more">Read More <span>&#10140;</span></a>
+    </div>
+    {% endfor %}
+</div> {% endcomment %}
+
+<div class="blog-grid">
+    {% for post in posts %}
+    <div class="card">
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        <span class="category">{{ post.category }}</span>
+        <h4>{{ post.title|upper }}</h4>
+
+        <p class="short-description">
+            {{ post.description|truncatewords:20 }}...
+        </p>
+        <p class="full-description" style="display: none;">
+            {{ post.description }}
+        </p>
+
+        <small>{{ post.author }} | {{ post.date }}</small>
+        <a href="javascript:void(0);" class="read-more" onclick="toggleDescription(this)">
+            Read More <span>&#10140;</span>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function toggleDescription(el) {
+    const card = el.closest('.card');
+    const shortDesc = card.querySelector('.short-description');
+    const fullDesc = card.querySelector('.full-description');
+
+    const isExpanded = fullDesc.style.display === 'block';
+    
+    if (isExpanded) {
+        fullDesc.style.display = 'none';
+        shortDesc.style.display = 'block';
+        el.innerHTML = 'Read More <span>&#10140;</span>';
+    } else {
+        fullDesc.style.display = 'block';
+        shortDesc.style.display = 'none';
+        el.innerHTML = 'Read Less <span>&#10141;</span>';
+    }
+}
+</script>
+
+
+{% endblock %}

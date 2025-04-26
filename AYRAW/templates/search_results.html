@@ -1,0 +1,39 @@
+<!-- templates/search_results.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<div class="container py-5">
+  <h2>Search Results for "{{ query }}"</h2>
+  
+  {% if products %}
+    <div class="product-grid">
+      {% for product in products %}
+        <div class="product-card">
+          <div class="product-img">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <span class="label">Found ⭐</span>
+          </div>
+          <div class="product-info">
+            <h4>{{ product.name }}</h4>
+            <p class="desc">{{ product.description }}</p>
+            <p class="rating">⭐ {{ product.rating }} ({{ product.reviews }})</p>
+            <div class="sizes">
+              {% for size in product.sizes %}
+                <button class="size-btn">{{ size.label }}</button>
+              {% endfor %}
+            </div>
+            <div class="price-section">
+              <p class="price">₹{{ product.price }}</p>
+              <p class="discount">🎉 Flat {{ product.discount }}% OFF</p>
+            </div>
+            <button class="add-to-cart">ADD TO CART</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No results found for "{{ query }}".</p>
+  {% endif %}
+</div>
+{% endblock %}

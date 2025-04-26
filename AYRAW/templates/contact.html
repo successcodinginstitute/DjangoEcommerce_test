@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block 'main' %}
+
+
+<div class="container-fluid px-0">
+    <div class="header d-flex align-items-center justify-content-center">
+        <div class="header-overlay"></div>
+        <div class="header-content text-center text-white">
+            <h1>We’d Love to Hear from You</h1>
+            <p>We are here to provide information, answer questions, and help with your needs.</p>
+            <div class="scroll-down">
+                <i class="fa fa-angle-down"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inquiry Section -->
+<div id="main-content" class="container text-center my-5 py-5">
+    <h2 class="mb-4">Reason for Inquiry</h2>
+    <p class="mb-5">Choose the relevant option to submit your inquiry.</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3><i class="fas fa-laptop-code fa-3x mb-2"></i> Request A Demo</h3>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#requestDemoModal">Request A Demo</button>
+        </div>
+
+        <div class="col-md-4">
+            <h3><i class="fas fa-handshake fa-3x mb-2"></i> Sales Inquiry</h3>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#salesInquiryModal">Sales Inquiry</button>
+        </div>
+
+        <div class="col-md-4">
+            <h3><i class="fas fa-headset fa-3x mb-2"></i> Customer Support</h3>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#customerSupportModal">Customer Support</button>
+        </div>
+    </div>
+</div>
+
+<!-- Request A Demo Modal -->
+<div class="modal fade" id="requestDemoModal" tabindex="-1" aria-labelledby="requestDemoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Request A Demo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'request_demo' %}">
+                    {% csrf_token %}
+                    {{ request_demo_form.as_p }}  
+                    <button type="submit" class="btn btn-danger w-100">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sales Inquiry Modal -->
+<div class="modal fade" id="salesInquiryModal" tabindex="-1" aria-labelledby="salesInquiryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sales Inquiry</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'sales_inquiry' %}">
+                    {% csrf_token %}
+                    {{ sales_inquiry_form.as_p }}
+                    <button type="submit" class="btn btn-danger w-100">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Customer Support Modal -->
+<div class="modal fade" id="customerSupportModal" tabindex="-1" aria-labelledby="customerSupportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Customer Support</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'customer_support' %}">
+                    {% csrf_token %}
+                    {{ customer_support_form.as_p }}
+                    <button type="submit" class="btn btn-danger w-100">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Information -->
+<div class="container text-center my-5 py-5">
+    <h2 class="mb-4">Get in Touch</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <h3><i class="fas fa-map-marker-alt fa-3x mb-2"></i> Address</h3>
+            <p>1234 Business Street, Your City</p>
+        </div>
+        <div class="col-md-4">
+            <h3><i class="fas fa-phone fa-3x mb-2"></i> Phone</h3>
+            <p>(123) 456-7890</p>
+        </div>
+        <div class="col-md-4">
+            <h3><i class="fas fa-envelope fa-3x mb-2"></i> Email</h3>
+            <p>contact@yourwebsite.com</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.scroll-down').addEventListener('click', function() {
+            document.getElementById('main-content').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+
+{% endblock %}
