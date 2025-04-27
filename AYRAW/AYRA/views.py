@@ -85,6 +85,9 @@ def product_detail(request, pk):
     print("prodcut deatils",product )
     return render(request, 'product_detail.html', {'product': product})
 
+
+from django.http import JsonResponse
+
 def toggle_wishlist(request):
     if request.method == "POST" and request.user.is_authenticated:
         product_id = request.POST.get('product_id')

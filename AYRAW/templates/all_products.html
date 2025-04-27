@@ -259,15 +259,15 @@
                     </div>
                   </a> {% endcomment %}
 
-                  <a href="javascript:void(0);" class="wishlist-toggle" data-product-id="{{ product.id }}">
+                  <a class="wishlist-toggle" data-product-id="{{ product.id }}">
                     <div class="wishlist-icon">
                         {% if product.id in wishlist_product_ids %}
-                            <i class="fas fa-heart filled-heart" style="color: red;"></i>  {# Filled heart #}
+                            <i class="fas fa-heart filled-heart" style="color:red;"></i>
                         {% else %}
-                            <i class="far fa-heart empty-heart"></i>  {# Empty heart #}
+                            <i class="far fa-heart empty-heart"></i>
                         {% endif %}
                     </div>
-                  </a>
+                  </a>                 
                 
                  </div>
                 {% comment %} <div class="add-to-cart" data-product-id="{{ product.id }}">ADD TO CART</div> {% endcomment %}
@@ -279,51 +279,59 @@
       {% endif %}  
     </div>
 </div>
-  
-{% endblock %}
+
+<input type="hidden" id="csrf-token" value="{{ csrf_token }}">
 
 <script>
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', function () {
-            const productId = this.getAttribute('data-product-id');
-
-            fetch(`/cart/add/${productId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',  // CSRF token for POST requests
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Product added to cart!');
-            })
-            .catch(error => {
-                console.error('Error adding to cart:', error);
-            });
-        });
-    });
-
-    $(document).ready(function() {
-      $(".wishlist-toggle").click(function() {
-          var $icon = $(this).find('i');
-          var productId = $(this).data("product-id");
-  
-          $.ajax({
-              url: "{% url 'toggle_wishlist' %}",  // we'll create this URL
-              method: "POST",
-              data: {
-                  'product_id': productId,
-                  'csrfmiddlewaretoken': '{{ csrf_token }}'
-              },
-              success: function(response) {
-                  if (response.added) {
-                      $icon.removeClass('far empty-heart').addClass('fas filled-heart').css('color', 'red');
-                  } else {
-                      $icon.removeClass('fas filled-heart').addClass('far empty-heart').css('color', '');
-                  }
+  {% comment %} document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', function () {
+          const productId = this.getAttribute('data-product-id');
+          console.log("add to cart")
+          fetch(`/cart/add/${productId}/`, {
+              method: 'POST',
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}',  // CSRF token for POST requests
               }
+          })
+          .then(response => response.json())
+          .then(data => {
+              alert('Product added to cart!');
+          })
+          .catch(error => {
+              console.error('Error adding to cart:', error);
           });
       });
+  }); {% endcomment %}
+
+  $(document).ready(function() {
+    console.log("inside")
+    var csrfToken = '{{ csrf_token }}';
+
+    $(".wishlist-toggle").click(function(e) {
+        e.preventDefault();  // prevent <a> click default
+        var $icon = $(this).find('i');
+        var productId = $(this).data("product-id");
+        
+        $.ajax({
+            url: "{% url 'toggle_wishlist' %}",
+            method: "POST",
+            data: {
+                'product_id': productId,
+                'csrfmiddlewaretoken': csrfToken
+            },
+            success: function(response) {
+                if (response.added) {
+                    $icon.removeClass('far empty-heart').addClass('fas filled-heart').css('color', 'red');
+                } else {
+                    $icon.removeClass('fas filled-heart').addClass('far empty-heart').css('color', '');
+                }
+            }
+        });
+    });      
   });
 
 </script>
+
+{% endblock %}
+
+
