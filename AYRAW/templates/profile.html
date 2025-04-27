@@ -12,6 +12,16 @@
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background:linear-gradient(to right, #e6a7e6, #a7c7e7);
     }
+
+    .btn-gradient {
+        background:linear-gradient(to right, #e6a7e6, #a7c7e7);
+  color: white;
+  border: none;
+  transition: background 0.5s;
+}
+
+.btn-gradient:hover {
+    background:linear-gradient(to right, #d96ed9, #70a4d7);}
 </style>
 <!-- <div class="container mt-5" style="background: linear-gradient(to right, #e6a7e6, #a7c7e7); max-width:50vw; height: 57vh; border-radius: 15px; font-family: Montserrat, sans-serif; font-optical-sizing: auto; font-weight: weighted; font-style: normal; display: flex; flex-direction: row; justify-content: center; align-items: center;" >
    
@@ -94,7 +104,7 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-dark w-100">Save Changes</button>
+                    <button type="submit" class="btn  btn-gradient w-100">Save Changes</button>
                 </form>
             </div>
         </div>
