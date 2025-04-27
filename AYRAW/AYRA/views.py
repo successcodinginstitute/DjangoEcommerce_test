@@ -66,8 +66,12 @@ def shipping_policy(request):
 
 def all_products(request):
     products = Product.objects.all()
+    wishlist_product_ids = []
+    if request.user.is_authenticated:
+        wishlist_product_ids = Wishlist.objects.filter(user=request.user).values_list('product_id', flat=True)
+
     print("products",products)
-    return render(request, 'all_products.html', {'products': products})
+    return render(request, 'all_products.html', {'products': products,'wishlist_product_ids': wishlist_product_ids,})
 
 from django.http import JsonResponse
 
@@ -80,6 +84,23 @@ def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     print("prodcut deatils",product )
     return render(request, 'product_detail.html', {'product': product})
+
+
+from django.http import JsonResponse
+
+def toggle_wishlist(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        product_id = request.POST.get('product_id')
+        product = Product.objects.get(id=product_id)
+        wishlist_item, created = Wishlist.objects.get_or_create(user=request.user, product=product)
+
+        if not created:
+            wishlist_item.delete()
+            return JsonResponse({'added': False})
+        else:
+            return JsonResponse({'added': True})
+
+    return JsonResponse({'error': 'Unauthorized'}, status=401)
 
 
 def search_products(request):
@@ -284,11 +305,17 @@ def place_order(request):
     request.session['total_price'] = float(total_price)
     # messages.success(request, "Your order has been placed successfully!")
     return redirect('payment')  # You can show a simple success page
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import Order
 
-# def payment(request):
-#     # Just a fake total for now — in a real setup, you'd calculate it
-#     total_price = request.session.get('total_price', 0)
-#     return render(request, 'payment.html', {'total_amount': total_price})
+@login_required(login_url='login')
+def order_list(request):
+    orders = Order.objects.filter(user=request.user).order_by('-id')  # latest first
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'order_list.html', context)
 
 def payment(request):
     total_price = request.session.get('total_price', 0)

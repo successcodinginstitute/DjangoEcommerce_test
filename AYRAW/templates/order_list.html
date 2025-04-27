@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<div class="order-list-container">
+    <h2>My Orders</h2>
+
+    {% if orders %}
+        <ul class="order-list">
+            {% for order in orders %}
+                <li class="order-item">
+                    <strong>Order ID:</strong> {{ order.id }}<br>
+                    <strong>Product:</strong> {{ order.product.name }}<br>
+                    <strong>Price:</strong> ₹{{ order.total_price }}<br>
+                    <strong>Status:</strong> {{ order.status }}<br>
+                    <strong>Ordered on:</strong> {{ order.order_date|date:"M d, Y H:i" }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no orders yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

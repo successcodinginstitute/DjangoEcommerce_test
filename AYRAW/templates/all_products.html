@@ -224,6 +224,7 @@
 
 <div class="carousel-container">
     <div class="carousel">
+      {% if products %}
         {% for product in products %}
         <a href="{% url 'product_detail' product.id %}" style="text-decoration: none; color: inherit;">  
         <div class="product-card"> <!-- Use <div> instead of <a> as container -->
@@ -248,39 +249,89 @@
                         ADD TO CART
                     </div>
                   </a>
-                  <a href="{% url 'add_to_wishlist' product.id %}">
-                      <div class="wishlist-icon">
-                          <i class="fas fa-heart"></i>
-                      </div>
-                  </a>
+                  {% comment %} <a href="{% url 'add_to_wishlist' product.id %}">
+                    <div class="wishlist-icon">
+                        {% if product.id in wishlist_product_ids %}
+                            <i class="fas fa-heart" style="color: red;"></i>  {# Filled heart #}
+                        {% else %}
+                            <i class="far fa-heart"></i>  {# Empty heart #}
+                        {% endif %}
+                    </div>
+                  </a> {% endcomment %}
+
+                  <a class="wishlist-toggle" data-product-id="{{ product.id }}">
+                    <div class="wishlist-icon">
+                        {% if product.id in wishlist_product_ids %}
+                            <i class="fas fa-heart filled-heart" style="color:red;"></i>
+                        {% else %}
+                            <i class="far fa-heart empty-heart"></i>
+                        {% endif %}
+                    </div>
+                  </a>                 
+                
                  </div>
                 {% comment %} <div class="add-to-cart" data-product-id="{{ product.id }}">ADD TO CART</div> {% endcomment %}
             </div>
         </div>
-        {% endfor %}  
+        {% endfor %}
+        {% else %}
+        <p>You have no Products yet.</p>
+      {% endif %}  
     </div>
 </div>
-  
-{% endblock %}
+
+<input type="hidden" id="csrf-token" value="{{ csrf_token }}">
 
 <script>
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', function () {
-            const productId = this.getAttribute('data-product-id');
+  {% comment %} document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', function () {
+          const productId = this.getAttribute('data-product-id');
+          console.log("add to cart")
+          fetch(`/cart/add/${productId}/`, {
+              method: 'POST',
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}',  // CSRF token for POST requests
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              alert('Product added to cart!');
+          })
+          .catch(error => {
+              console.error('Error adding to cart:', error);
+          });
+      });
+  }); {% endcomment %}
 
-            fetch(`/cart/add/${productId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',  // CSRF token for POST requests
+  $(document).ready(function() {
+    console.log("inside")
+    var csrfToken = '{{ csrf_token }}';
+
+    $(".wishlist-toggle").click(function(e) {
+        e.preventDefault();  // prevent <a> click default
+        var $icon = $(this).find('i');
+        var productId = $(this).data("product-id");
+        
+        $.ajax({
+            url: "{% url 'toggle_wishlist' %}",
+            method: "POST",
+            data: {
+                'product_id': productId,
+                'csrfmiddlewaretoken': csrfToken
+            },
+            success: function(response) {
+                if (response.added) {
+                    $icon.removeClass('far empty-heart').addClass('fas filled-heart').css('color', 'red');
+                } else {
+                    $icon.removeClass('fas filled-heart').addClass('far empty-heart').css('color', '');
                 }
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Product added to cart!');
-            })
-            .catch(error => {
-                console.error('Error adding to cart:', error);
-            });
+            }
         });
-    });
+    });      
+  });
+
 </script>
+
+{% endblock %}
+
+

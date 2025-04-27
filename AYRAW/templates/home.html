@@ -480,17 +480,17 @@
             </div>
         </a> {% endcomment %}
         <div class="category-products">
-          {% for category, products in grouped_products %}
-            <h2 style="color: hotpink; margin-top: 30px;">{{ category.name }}</h2>
+          {% for cat in category %}
+            <h2 style="color: hotpink; margin-top: 30px;">{{ cat.name }}</h2>
             
             <div class="product-grid">
               {% comment %} {% for product in products %} {% endcomment %}
-                <a href="{% url 'category_products' category.id %}" class="category-card" style="background-color: #fff3cd; text-decoration: none; color: inherit;">  
+                <a href="{% url 'category_products' cat.id %}" class="category-card" style="background-color: #fff3cd; text-decoration: none; color: inherit;">  
                   <div class="product-img">
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                    <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
                   </div>
                   <div class="category-info">
-                    <p>{{category.description}}.</p>
+                    <p>{{cat.description}}.</p>
                     <p class="skin-type">✔ For All</p>
                   </div>
                 </a>
@@ -573,8 +573,8 @@
 </style>
 
 
-<section class="container py-5 text-center" style="background: linear-gradient(to right, #e6a7e6, #a7c7e7);">
-  <div class="p-4 bg-light rounded shadow-sm" >
+<section class="container py-2 text-center" style=" display: flex; justify-content: center; align-items: center; margin-bottom: 8vh;">
+  <div class="p-4  " >
       <h2 class="mb-3 fw-bold text-dark">📖 Need Help? Explore Our User Guide</h2>
       <p class="mb-4 text-muted">Find step-by-step instructions and answers to your questions.</p>
       <a href="{% url 'user_guide' %}" class="btn btn-lg btn-dark px-4 shadow">

@@ -38,6 +38,8 @@ urlpatterns = [
     path('update-qty/<int:product_id>/<int:action>/', views.update_qty, name='update_qty'),
     path('place-order/', views.place_order, name='place_order'),
     path('payment/', views.payment, name='payment'),
+    path('my-orders/', views.order_list, name='order_list'),
+    path('toggle-wishlist/', views.toggle_wishlist, name='toggle_wishlist'),
 
     path('order_success/', views.order_success, name='order_success'),
     #path('my-orders/', views.my_orders, name='my_orders'),
