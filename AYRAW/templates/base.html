@@ -89,8 +89,11 @@
     /* Footer Styling */
     .footer {
       background: linear-gradient(to right, #e6a7e6, #a7c7e7);
-      padding: 40px 20px;
-      color: white;
+      /* padding: 40px 20px; */
+      /* color: white; */
+      position: fixed;
+      bottom:0px;
+      width:100%;
     }
     
     .footer-content {
@@ -148,7 +151,7 @@
     }
     
     .footer-bottom {
-      margin-top: 30px;
+      /* margin-top: 30px; */
       text-align: center;
       font-size: 0.9rem;
       padding-top: 20px;
@@ -305,7 +308,7 @@
   {% block footer %}
   <!-- Footer -->
   <footer class="footer">
-    <div class="footer-content">
+    <!-- <div class="footer-content">
       <div class="footer-section">
         <img src="{% static 'images/ayralogo.jpg' %}" alt="AYRA Logo" class="footer-logo">
         <p>AYRA Online Shop</p>
@@ -332,7 +335,7 @@
           <li><a href="/contact" style="text-decoration: none;">Contact Us</a></li>
         </ul>
       </div>
-    </div>
+    </div> -->
     <div class="footer-bottom">
       <p>&copy; 2025 Grateful Mind Corporation. All Rights Reserved.</p>
     </div>
