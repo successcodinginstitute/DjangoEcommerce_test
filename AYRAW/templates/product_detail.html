@@ -35,38 +35,46 @@
 
 <body class="bg-gray-100 text-gray-900">
 
-  <div class="max-w-4xl mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
-    <div class="md:flex">
-      <!-- Product Image -->
-      {% comment %} <div class="md:w-1/2 p-4">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-80 object-cover rounded">
+  <div class="max-w-4xl mx-auto mt-10 bg-white  rounded-lg overflow-hidden" style="height:71.8vh; display:flex; align-items: center; justify-content: center;">
+    <div style="padding: 1rem; border-radius: 8px; box-shadow: 5px 5px 50px black; height: 60%; display: flex; align-items: center; justify-content: center;">
+      <div class="md:flex" style="display: flex; align-items: center; justify-content: center; height: 80%;">
+        <!-- Product Image -->
+        {% comment %} <div class="md:w-1/2 p-4">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full object-cover rounded" >
+          </div>
+          {% endcomment %}
+        {% comment %} <div class="w-64 sm:w-80 h-64 sm:h-80 bg-gray-100 rounded overflow-hidden mx-auto"> {% endcomment %}
+        <div class="product-img" style="height: 100%;width: 100%; background: transparent;">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-contain" style="border-radius: 8px;" >
+        </div>
+         
+        
+        <!-- Product Details -->
+        <div class="md:w-1/2 p-6" style="height:100%;"> 
+          <h2 class="text-3xl font-bold mb-4">{{ product.name }}1</h2>
+          <p class="text-xl text-green-600 font-semibold mb-4">₹{{ product.price }}</p>
+          <p class="text-gray-700 mb-6">{{ product.description }}</p>
+  
+          {% comment %} <a href="{% url 'place_order' %}" class="bg-blue-600 text-blue px-6 py-2 rounded hover:bg-blue-700 transition">
+            Buy Now
+          </a> {% endcomment %}
+          <div class="action-buttons " style="display: flex; gap: 2rem;">
+            <a href="{% url 'add_to_cart' product.id %}" style="text-decoration: none;">
+              <div class="add-to-cart">
+                <button type="button" class="btn btn-primary">Buy Now</button>
+              </div>
+            </a>
+            <a href="{% url 'add_to_cart' product.id %}" style="text-decoration: none;">
+              <div>
+                <button type="button" class="btn btn-outline-info">Add to cart</button>
+              </div>
+            </a>
+          </div>
+  
+        </div>
       </div>
-       {% endcomment %}
-     {% comment %} <div class="w-64 sm:w-80 h-64 sm:h-80 bg-gray-100 rounded overflow-hidden mx-auto"> {% endcomment %}
-    <div class="product-img">
-      <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-contain">
     </div>
-       
-      
-      <!-- Product Details -->
-      <div class="md:w-1/2 p-6">
-        <h2 class="text-3xl font-bold mb-4">{{ product.name }}</h2>
-        <p class="text-xl text-green-600 font-semibold mb-4">₹{{ product.price }}</p>
-        <p class="text-gray-700 mb-6">{{ product.description }}</p>
-
-        {% comment %} <a href="{% url 'place_order' %}" class="bg-blue-600 text-blue px-6 py-2 rounded hover:bg-blue-700 transition">
-          Buy Now
-        </a> {% endcomment %}
-        <div class="action-buttons">
-          <a href="{% url 'add_to_cart' product.id %}" style="text-decoration: none;">
-            <div class="add-to-cart">
-              Buy Now
-            </div>
-          </a>
-         </div>
-
-      </div>
-    </div>
+    
   </div>
 
 {% comment %} </body>

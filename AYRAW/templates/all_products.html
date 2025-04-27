@@ -184,6 +184,11 @@
     .wishlist-icon i:hover {
         color: #e00b18; /* Hover effect */
     }
+    .words{
+      
+      overflow-wrap: break-word;
+      white-space: normal;
+    }
 </style>
 {% comment %} 
 <section class="all-products">
@@ -198,7 +203,7 @@
                     </div>
                     <div class="product-info">
                         <h4>{{ product.name }}</h4>
-                        <p class="desc">{{ product.description|truncatewords:15 }}</p>
+                        <p class="desc words">{{ product.description|truncatewords:15 }}</p>
                         <p class="rating">⭐ {{ product.rating }} ({{ product.reviews }})</p>
                         <div class="sizes">
                             {% for size in product.sizes %}
@@ -228,7 +233,7 @@
             </div>
             <div class="product-info">
                 <h4>{{ product.name }}</h4>
-                <p class="desc">{{ product.description|truncatewords:15 }}</p>
+                <p class="desc words">{{ product.description|truncatewords:15 }}</p>
                 <div class="rating"><i class="fas fa-star"></i> {{ product.rating }} ({{ product.reviews }})</div>
                 <span class="badge discount-badge">Flat {{ product.discount }}% OFF</span>
                 <div class="price">₹{{ product.price }}</div>
