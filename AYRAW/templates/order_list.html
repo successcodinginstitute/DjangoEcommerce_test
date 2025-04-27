@@ -3,22 +3,45 @@
 {% block 'main' %}
 
 <div class="order-list-container">
-    <h2>My Orders</h2>
 
     {% if orders %}
-        <ul class="order-list">
-            {% for order in orders %}
-                <li class="order-item">
-                    <strong>Order ID:</strong> {{ order.id }}<br>
-                    <strong>Product:</strong> {{ order.product.name }}<br>
-                    <strong>Price:</strong> ₹{{ order.total_price }}<br>
-                    <strong>Status:</strong> {{ order.status }}<br>
-                    <strong>Ordered on:</strong> {{ order.order_date|date:"M d, Y H:i" }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>You have no orders yet.</p>
-    {% endif %}
+    <h2 class="text-center">My Orders</h2>
+<div class="d-flex d-flex justify-content-center">    
+  <table class=" table table-bordered table-striped" > <!-- style="width: auto;" -->
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Status</th>
+        <th scope="col">Ordered On</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th> <!-- Serial number -->
+        <td>{{ order.product.name }}</td>
+        <td>₹{{ order.total_price }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.order_date|date:"M d, Y H:i" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="card text-center p-4 shadow-lg border" style="width: 22rem;">
+      <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" class="card-img-top mx-auto" style="width: 150px;" alt="No orders">
+      <div class="card-body">
+        <h5 class="card-title">No Orders Yet</h5>
+        <p class="card-text">Looks like you haven't ordered anything yet. Start shopping now!</p>
+        <a href="/shop/all" class="btn btn-primary">Start shopping from here</a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
 </div>
 {% endblock %}

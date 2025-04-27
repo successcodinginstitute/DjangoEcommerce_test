@@ -3,8 +3,11 @@
 {% load static %}
 
 {% block 'main' %}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b00a8608ed699ef101ba7b191f7fb5d6707333a1
 <style>
 
   .carousel-container {
@@ -191,8 +194,7 @@
     white-space: normal;
   }
 </style>
-
-<div class="container py-5">
+<div class="container py-3">
   <h2>Search Results for "{{ query }}"</h2>
   
   {% comment %} {% if products %}
@@ -201,7 +203,7 @@
         <div class="product-card">
           <div class="product-img">
             <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            <span class="label">Found ⭐</span>
+            
           </div>
           <div class="product-info">
             <h4>{{ product.name }}</h4>
