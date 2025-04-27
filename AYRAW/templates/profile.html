@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
 
 {% block 'main' %}
-<div class="container mt-5">
-    <h2 class="text-center">User Profile</h2>
-    <div class="card mx-auto shadow-lg" style="max-width: 500px;">
+<style>
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #f6d365;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background:linear-gradient(to right, #e6a7e6, #a7c7e7);
+    }
+</style>
+<!-- <div class="container mt-5" style="background: linear-gradient(to right, #e6a7e6, #a7c7e7); max-width:50vw; height: 57vh; border-radius: 15px; font-family: Montserrat, sans-serif; font-optical-sizing: auto; font-weight: weighted; font-style: normal; display: flex; flex-direction: row; justify-content: center; align-items: center;" >
+   
+    <div>
+    <h2 class="text-center text-white fw-bold">User Profile</h2>
+    <div class="card mx-auto shadow-lg" style="width:50vw;">
         <div class="card-body text-center">
-            <i class="fas fa-user-circle fa-5x text-secondary"></i>
-            <h4 class="mt-3">{{ profile.full_name }}</h4>
+            <i class="fas fa-user-circle fa-5x" style="color: #83abb8;"></i>
+            <h4 class="mt-3 text-secondary fw-bold">{{ profile.full_name }}</h4>
             <p><strong>Username:</strong> {{ request.user.username }}</p>
             <p><strong>Email:</strong> {{ request.user.email }}</p>
             <p><strong>Contact:</strong> {{ profile.contact_number }}</p>
@@ -17,6 +31,56 @@
         </div>
     </div>
 </div>
+</div> -->
+
+<section class="vh-100" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center text-white"
+                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                <i class="fas fa-user-circle fa-5x" style="color:white;" alt="Avatar" class="img-fluid my-5" style="width: 80px;"></i>
+                <h4>{{ profile.full_name }}</h4>
+                <h6 class="text-secondary">Username:</h6>
+                <p>{{ request.user.username }}</p>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p>{{ request.user.email }}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Phone</h6>
+                      <p class="text-muted">{{ profile.contact_number }}</p>
+                    </div>
+                  </div>
+
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Address</h6>
+                      <p class="text-muted">{{ profile.address }}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <!-- <h6>Most Viewed</h6> -->
+                      <button class="btn btn-dark mt-3" data-bs-toggle="modal" data-bs-target="#editProfileModal"> Edit Profile
+                    </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 <!-- Edit Profile Modal -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
