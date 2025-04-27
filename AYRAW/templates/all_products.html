@@ -224,6 +224,7 @@
 
 <div class="carousel-container">
     <div class="carousel">
+      {% if products %}
         {% for product in products %}
         <a href="{% url 'product_detail' product.id %}" style="text-decoration: none; color: inherit;">  
         <div class="product-card"> <!-- Use <div> instead of <a> as container -->
@@ -248,16 +249,34 @@
                         ADD TO CART
                     </div>
                   </a>
-                  <a href="{% url 'add_to_wishlist' product.id %}">
-                      <div class="wishlist-icon">
-                          <i class="fas fa-heart"></i>
-                      </div>
+                  {% comment %} <a href="{% url 'add_to_wishlist' product.id %}">
+                    <div class="wishlist-icon">
+                        {% if product.id in wishlist_product_ids %}
+                            <i class="fas fa-heart" style="color: red;"></i>  {# Filled heart #}
+                        {% else %}
+                            <i class="far fa-heart"></i>  {# Empty heart #}
+                        {% endif %}
+                    </div>
+                  </a> {% endcomment %}
+
+                  <a href="javascript:void(0);" class="wishlist-toggle" data-product-id="{{ product.id }}">
+                    <div class="wishlist-icon">
+                        {% if product.id in wishlist_product_ids %}
+                            <i class="fas fa-heart filled-heart" style="color: red;"></i>  {# Filled heart #}
+                        {% else %}
+                            <i class="far fa-heart empty-heart"></i>  {# Empty heart #}
+                        {% endif %}
+                    </div>
                   </a>
+                
                  </div>
                 {% comment %} <div class="add-to-cart" data-product-id="{{ product.id }}">ADD TO CART</div> {% endcomment %}
             </div>
         </div>
-        {% endfor %}  
+        {% endfor %}
+        {% else %}
+        <p>You have no Products yet.</p>
+      {% endif %}  
     </div>
 </div>
   
@@ -283,4 +302,28 @@
             });
         });
     });
+
+    $(document).ready(function() {
+      $(".wishlist-toggle").click(function() {
+          var $icon = $(this).find('i');
+          var productId = $(this).data("product-id");
+  
+          $.ajax({
+              url: "{% url 'toggle_wishlist' %}",  // we'll create this URL
+              method: "POST",
+              data: {
+                  'product_id': productId,
+                  'csrfmiddlewaretoken': '{{ csrf_token }}'
+              },
+              success: function(response) {
+                  if (response.added) {
+                      $icon.removeClass('far empty-heart').addClass('fas filled-heart').css('color', 'red');
+                  } else {
+                      $icon.removeClass('fas filled-heart').addClass('far empty-heart').css('color', '');
+                  }
+              }
+          });
+      });
+  });
+
 </script>

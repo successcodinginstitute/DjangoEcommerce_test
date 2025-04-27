@@ -480,17 +480,17 @@
             </div>
         </a> {% endcomment %}
         <div class="category-products">
-          {% for category, products in grouped_products %}
-            <h2 style="color: hotpink; margin-top: 30px;">{{ category.name }}</h2>
+          {% for cat in category %}
+            <h2 style="color: hotpink; margin-top: 30px;">{{ cat.name }}</h2>
             
             <div class="product-grid">
               {% comment %} {% for product in products %} {% endcomment %}
-                <a href="{% url 'category_products' category.id %}" class="category-card" style="background-color: #fff3cd; text-decoration: none; color: inherit;">  
+                <a href="{% url 'category_products' cat.id %}" class="category-card" style="background-color: #fff3cd; text-decoration: none; color: inherit;">  
                   <div class="product-img">
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                    <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
                   </div>
                   <div class="category-info">
-                    <p>{{category.description}}.</p>
+                    <p>{{cat.description}}.</p>
                     <p class="skin-type">✔ For All</p>
                   </div>
                 </a>

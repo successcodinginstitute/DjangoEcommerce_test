@@ -234,6 +234,7 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="userDropdown">
           {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'order_list' %}">My orders</a></li>
             <li><a class="dropdown-item" href="{% url 'profile' %}">Edit Profile</a></li>
             <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
           {% else %}

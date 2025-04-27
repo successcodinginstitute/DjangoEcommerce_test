@@ -1,6 +1,6 @@
 1: Add to cart-- Done
 2: wish list-- Done
-3: email functionalities-- In Progress
+3: email functionalities-- Done
 4: register new user-- Done
 5: payment page : work with network (tentative) 
 6: add same layout on every page -- Done
