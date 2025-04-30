@@ -78,5 +78,6 @@ urlpatterns = [
     path('metabolism boost/', views.metabolism, name='toner_detail'),
 
     path('blog_list/', views.blog_list, name='blog_list'),
+    # path('forget-password/', views.forget_password_view, name='forget_password')
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

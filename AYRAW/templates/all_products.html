@@ -283,7 +283,7 @@
 <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
 
 <script>
-  {% comment %} document.querySelectorAll('.add-to-cart').forEach(button => {
+  document.querySelectorAll('.add-to-cart').forEach(button => {
       button.addEventListener('click', function () {
           const productId = this.getAttribute('data-product-id');
           console.log("add to cart")
@@ -301,7 +301,7 @@
               console.error('Error adding to cart:', error);
           });
       });
-  }); {% endcomment %}
+  }); 
 
   $(document).ready(function() {
     console.log("inside")

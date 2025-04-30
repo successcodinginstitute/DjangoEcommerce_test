@@ -24,6 +24,8 @@ from django.db.models import Q
 # views.py
 from django.shortcuts import render
 
+
+
 def shipping_policy(request):
     context = {
         'title': 'Shipping Policy',
@@ -559,7 +561,7 @@ def forget_password(request):
             # Here you would typically generate a password reset token
             # and send it via email. This is a simplified example:
             
-            reset_link = f"http://yourdomain.com/reset-password/{user.pk}/"
+            reset_link = f"http://127.0.0.1:8000/reset_password/"#f"http://yourdomain.com/reset-password/{user.pk}/"
             subject = 'Password Reset Request'
             message = f'Hello {user.username},\n\nClick the link to reset your password: {reset_link}'
             from_email = settings.DEFAULT_FROM_EMAIL
