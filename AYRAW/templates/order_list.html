@@ -15,6 +15,7 @@
         <th scope="col">Price</th>
         <th scope="col">Status</th>
         <th scope="col">Ordered On</th>
+        <th scope="col">Payment Status On</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
         <td>₹{{ order.total_price }}</td>
         <td>{{ order.status }}</td>
         <td>{{ order.order_date|date:"M d, Y H:i" }}</td>
+        <td>{{ order.payment_status }}</td>
       </tr>
       {% endfor %}
     </tbody>
