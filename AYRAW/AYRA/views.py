@@ -356,7 +356,7 @@ def payment(request):
         buyer_name='Test User',
         send_email=True,
         email='test@example.com',  # You can make this dynamic
-        redirect_url='http://localhost:8000/payment-success/'
+        redirect_url='http://localhost:8000/payment-success/' # replace localhost:8000 with your domain
         # redirect_url=use
 
     )
