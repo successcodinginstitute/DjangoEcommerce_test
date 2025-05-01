@@ -6,10 +6,10 @@ __pycache__/
 *.pyc
 
 # Virtual Environments
-# env/
-# venv/
-# ENV/
-# .venv/
+env/
+venv/
+ENV/
+.venv/
 
 # Django stuff
 *.log
