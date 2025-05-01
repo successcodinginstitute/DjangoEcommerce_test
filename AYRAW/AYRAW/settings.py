@@ -73,6 +73,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AYRAW.wsgi.application'
 
+# Razorpay test credentials
+RAZORPAY_KEY_ID = "801643e8bf855eeff0252a0b03df48e5"
+RAZORPAY_KEY_SECRET = "970dd00bcc5ba487a7f13687cef69dda"
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

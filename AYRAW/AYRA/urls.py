@@ -17,7 +17,6 @@ urlpatterns = [
     # path('category_products', views.category_products, name='category_products'),
     path('category/<int:category_id>/', views.category_products, name='category_products'),
 
-
     path('skincare/', views.skincare_view, name='skincare'),
     path('scalp-care/', views.scalpcare_products, name='scalpcare_products'),
     path('weight-loss/', views.weightloss_products, name='weightloss_products'),
@@ -25,8 +24,6 @@ urlpatterns = [
     path('skincare/cleanser/', views.cleanser_detail, name='cleanser_detail'),
     path('skincare/', views.skincare_list, name='skincare'),  
     path('shipping-policy/', views.shipping_policy, name='shipping_policy'),
-
-
     path('weightloss/', views.weightloss, name='weightloss'),
     path('about/', views.about, name='about'), 
     path('user_guide/', views.user_guide, name='user_guide'), 
@@ -38,6 +35,11 @@ urlpatterns = [
     path('update-qty/<int:product_id>/<int:action>/', views.update_qty, name='update_qty'),
     path('place-order/', views.place_order, name='place_order'),
     path('payment/', views.payment, name='payment'),
+    path('payment-success/', views.payment_success, name='payment_success'),
+    path('instamojo-webhook/', views.instamojo_webhook, name='instamojo_webhook'),
+    # path('razorpay-webhook/', views.razorpay_webhook, name='razorpay_webhook'),
+    # https://30ac-106-221-216-216.ngrok-free.app/razorpay-webhook/
+
     path('my-orders/', views.order_list, name='order_list'),
     path('toggle-wishlist/', views.toggle_wishlist, name='toggle_wishlist'),
 
