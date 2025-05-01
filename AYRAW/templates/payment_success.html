@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block main %}
+<head>
+    <meta http-equiv="refresh" content="3;url={% url 'order_success' %}">
+</head>
+
 <div class="payment-container">
     <h2>Payment {{ status|title }}</h2>
     <p>Your Payment ID: {{ payment_id }}</p>
+    <p>You will be redirected to the order confirmation page shortly...</p>
 </div>
 {% endblock %}
