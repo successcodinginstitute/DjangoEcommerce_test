@@ -150,7 +150,7 @@
         font-size: 14px;
         margin-top: 10px;
       }
-      {% comment %} .add-to-cart {
+      .add-to-cart {
         background: black;
         color: white;
         padding: 10px;
@@ -160,7 +160,7 @@
         border-bottom-left-radius: 16px;
         border-bottom-right-radius: 16px;
         cursor: pointer;
-      } {% endcomment %}
+      } 
       .action-buttons {
         display: flex;
         align-items: center;
@@ -183,6 +183,10 @@
     .wishlist-icon i:hover {
         color: #e00b18; /* Hover effect */
     }
+    .words{
+      overflow-wrap: break-word;
+      white-space: normal;
+    }
 </style>
 
 <div class="carousel-container">
@@ -196,7 +200,7 @@
             </div>
             <div class="product-info">
                 <h4>{{ product.name }}</h4>
-                <p class="desc">{{ product.description|truncatewords:15 }}</p>
+                <p class="desc words">{{ product.description|truncatewords:15 }}</p>
                 <div class="rating"><i class="fas fa-star"></i> {{ product.rating }} ({{ product.reviews }})</div>
                 <span class="badge discount-badge">Flat {{ product.discount }}% OFF</span>
                 <div class="price">₹{{ product.price }}</div>

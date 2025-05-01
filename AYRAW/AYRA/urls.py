@@ -14,6 +14,7 @@ urlpatterns = [
     path('scalpcare/', views.scalpcare, name='scalpcare'),
     path('profile/', views.profile_view, name='profile'), 
     path('shop/all/', views.all_products, name='all_products'),
+    path('reset_password/', views.reset_password, name='reset_password'),
     # path('category_products', views.category_products, name='category_products'),
     path('category/<int:category_id>/', views.category_products, name='category_products'),
 

@@ -4,7 +4,7 @@
 
 {% comment %} {% block content %} {% endcomment %}
 {% block 'main' %}
-<style>
+<!-- <style>
 
   .product-img {
       width: 200px; /* or whatever size you want */
@@ -13,8 +13,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #f9f9f9; /* Optional: adds a background */
-      border-radius: 8px;         /* Optional: rounded corners */
+       background-color: #f9f9f9; /*Optional: adds a background */
+       border-radius: 8px;         /*Optional: rounded corners */
   }
   
   .product-img img {
@@ -23,7 +23,182 @@
       object-fit: contain;
   }
   
+</style> -->
+<style>
+  /* General styling for product image */
+  .product-img {
+      width: 100%; /* Makes sure image takes full width of parent container */
+      height: 220px; /* Fixed height to maintain aspect ratio */
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+  }
+
+  .product-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+  }
+
+  /* Product Info */
+  .product-info h2 {
+      color: #1a202c;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+  }
+
+  .product-info p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #4a5568;
+      margin-bottom: 1rem;
+  }
+
+  .product-info .price {
+      font-size: 1.25rem;
+      color: #2d3748;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+  }
+
+  /* Action buttons */
+  .action-buttons button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+  }
+
+  .action-buttons .btn-primary {
+      background-color: #3182ce;
+      color: white;
+      border: none;
+  }
+
+  .action-buttons .btn-outline-info {
+      background-color: transparent;
+      color: #3182ce;
+      border: 2px solid #3182ce;
+  }
+
+  /* Hover effect for buttons */
+  .action-buttons button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 123, 255, 0.2);
+  }
+
+  /* Main wrapper: flex layout */
+  .product-details-wrapper {
+      display: flex;
+      flex-wrap: wrap; /* Allow content to wrap on smaller screens */
+      gap: 2rem;
+      align-items: flex-start;
+  }
+
+  /* Mobile (below 480px) responsiveness */
+  @media (max-width: 480px) {
+      .product-details-wrapper {
+          flex-direction: column !important; /* Stack the image and details */
+          align-items: center;
+          text-align: center;
+      }
+
+      .product-img {
+          width: 100%;  /* Make image take full width */
+          height: 200px; /* Adjust height for smaller screens */
+          margin-bottom: 1rem; /* Spacing between image and product details */
+      }
+
+      .product-info {
+          width: 100%; /* Ensure content takes full width */
+          padding: 1rem;
+      }
+
+      .product-info h2 {
+          font-size: 1.5rem;
+      }
+
+      .product-info p {
+          font-size: 0.9rem;
+      }
+
+      .product-info .price {
+          font-size: 1.1rem;
+      }
+
+      .action-buttons button {
+          font-size: 0.9rem;
+          padding: 10px 20px;
+      }
+  }
+
+  /* Tablet (between 481px and 768px) responsiveness */
+  @media (max-width: 768px) {
+      .product-details-wrapper {
+          flex-direction: row !important; /* Keep side by side layout */
+          gap: 1.5rem;
+      }
+
+      .product-img {
+          width: 200px;  /* Slightly smaller image for tablets */
+          height: 200px;
+      }
+
+      .product-info {
+          width: 60%;
+      }
+
+      .product-info h2 {
+          font-size: 1.75rem;
+      }
+
+      .product-info p {
+          font-size: 1rem;
+      }
+
+      .action-buttons button {
+          font-size: 1rem;
+          padding: 12px 24px;
+      }
+  }
+
+  /* Desktop (769px and above) responsiveness */
+  @media (min-width: 769px) {
+      .product-details-wrapper {
+          flex-direction: row; /* Maintain side by side on larger screens */
+      }
+
+      .product-img {
+          width: 220px;
+          height: 220px;
+      }
+
+      .product-info {
+          width: 60%;
+      }
+
+      .product-info h2 {
+          font-size: 2rem;
+      }
+
+      .product-info p {
+          font-size: 1rem;
+      }
+
+      .action-buttons button {
+          font-size: 1rem;
+          padding: 12px 24px;
+      }
+  }
 </style>
+
+
+
+
 
 {% comment %} <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +211,7 @@
 <body class="bg-gray-100 text-gray-900">
 
   <div class="max-w-4xl mx-auto mt-10 bg-white  rounded-lg overflow-hidden" style="height:71.8vh; display:flex; align-items: center; justify-content: center;">
-    <div style="padding: 1rem; border-radius: 8px; box-shadow: 5px 5px 50px black; height: 60%; display: flex; align-items: center; justify-content: center;">
+    <div style="padding: 1rem; border-radius: 8px; box-shadow: 5px 5px 50px black; display: flex; align-items: center; justify-content: center;">
       <div  style="display: flex; align-items: center; justify-content: space-between; height: 80%;">
         <!-- Product Image -->
         {% comment %} <div class="md:w-1/2 p-4">

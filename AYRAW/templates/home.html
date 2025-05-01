@@ -190,24 +190,36 @@
 }
 
 .category-cards {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    position:relative;
+    display: flex; 
+    width:100%;
+    /* flex-wrap: wrap; */
+    overflow-x: auto;
     gap: 20px;
 }
 
 .category-card {
-    border-radius: 10px;
+    /* border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    flex: 1 1 300px;
+    flex: 0 0 300px;
     max-width: 350px;
     padding: 10px;
     text-align: center;
     display: block;
-    transition: transform 0.2s;
+    transition: transform 0.2s; */
+    
+    flex: 0 0 auto; /* Prevent shrinking/growing, keep fixed width */
+    width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    background-color: #fff3cd; /* You can override this inline too */
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-.category-card:hover {
+.category-card:hover { 
     transform: scale(1.05);
 }
 
@@ -377,6 +389,10 @@
   .carousel-control-next:hover .carousel-control-next-icon {
     background-color: rgba(255,255,255,0.7);
   }
+  .description {
+    height:150px;
+    overflow-y: auto;
+  }
   
   @media (max-width: 768px) {
     .carousel-item img {
@@ -479,25 +495,24 @@
                 <p class="skin-type">✔ For All</p>
             </div>
         </a> {% endcomment %}
-        <div class="category-products">
+        <!-- <div class="category-products"> -->
           {% for cat in category %}
-            <h2 style="color: hotpink; margin-top: 30px;">{{ cat.name }}</h2>
-            
-            <div class="product-grid">
+            <!-- <div class="product-grid"> -->
               {% comment %} {% for product in products %} {% endcomment %}
                 <a href="{% url 'category_products' cat.id %}" class="category-card" style="background-color: #fff3cd; text-decoration: none; color: inherit;">  
                   <div class="product-img">
                     <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
                   </div>
                   <div class="category-info">
-                    <p>{{cat.description}}.</p>
+                    <h2 style="color: hotpink; margin-top: 10px;">{{ cat.name }}</h2>
+                    <p class="description">{{cat.description}}.</p>
                     <p class="skin-type">✔ For All</p>
                   </div>
                 </a>
               {% comment %} {% endfor %} {% endcomment %}
-            </div>
+            <!-- </div> -->
           {% endfor %}
-        </div>
+        <!-- </div> -->
         
     </div>
 </div>
