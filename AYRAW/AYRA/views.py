@@ -23,6 +23,10 @@ from .models import Product,Order
 from django.db.models import Q
 # views.py
 from django.shortcuts import render
+from django.contrib.auth.hashers import make_password
+from django.urls import reverse
+
+
 import requests
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
@@ -675,6 +679,16 @@ def register(request):
             user.save()
             messages.success(request, "Registration successful! Please log in.")
             return redirect('login')
+        else:
+            # Show non-field errors (like password mismatch) in modal
+            for error in form.non_field_errors():
+                messages.error(request, error)
+
+            # Optionally, also show field-specific errors
+            for field, errors in form.errors.items():
+                if field != '__all__':
+                    for error in errors:
+                        messages.error(request, f"{field.capitalize()}: {error}")
     else:
         form = RegisterForm()
 
@@ -704,6 +718,32 @@ def logout_user(request):
     messages.success(request, "Logged out successfully!")
     return redirect('/')
 
+def reset_password(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password != confirm_password:
+            messages.error(request, 'Passwords do not match.')
+            return render(request, 'reset_password.html')
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(email=username)
+            except User.DoesNotExist:
+                messages.error(request, 'User not found.')
+                return render(request, 'reset_password.html')
+
+        user.password = make_password(new_password)
+        user.save()
+        messages.success(request, 'Password has been reset successfully.')
+        return redirect('reset_password')
+
+    return render(request, 'reset_password.html')
+
 
 def forget_password(request):
     if request.method == 'POST':
@@ -713,7 +753,7 @@ def forget_password(request):
             # Here you would typically generate a password reset token
             # and send it via email. This is a simplified example:
             
-            reset_link = f"http://127.0.0.1:8000/reset_password/"#f"http://yourdomain.com/reset-password/{user.pk}/"
+            reset_link = request.build_absolute_uri(reverse('reset_password'))
             subject = 'Password Reset Request'
             message = f'Hello {user.username},\n\nClick the link to reset your password: {reset_link}'
             from_email = settings.DEFAULT_FROM_EMAIL
