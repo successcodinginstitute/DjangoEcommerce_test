@@ -27,6 +27,23 @@ from django.contrib.auth.hashers import make_password
 from django.urls import reverse
 
 
+import requests
+from django.shortcuts import redirect, render
+from django.http import HttpResponse
+import hmac
+import hashlib
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from collections import defaultdict
+from decimal import Decimal
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import Order
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Product, Cart, Wishlist
+from django.core.mail import send_mail
+from django.conf import settings
 
 def shipping_policy(request):
     context = {
@@ -77,8 +94,6 @@ def all_products(request):
     print("products",products)
     return render(request, 'all_products.html', {'products': products,'wishlist_product_ids': wishlist_product_ids,})
 
-from django.http import JsonResponse
-
 def products(request):
     products = Product.objects.all()
     products_list = list(products)
@@ -88,9 +103,6 @@ def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     print("prodcut deatils",product )
     return render(request, 'product_detail.html', {'product': product})
-
-
-from django.http import JsonResponse
 
 def toggle_wishlist(request):
     if request.method == "POST" and request.user.is_authenticated:
@@ -105,7 +117,6 @@ def toggle_wishlist(request):
             return JsonResponse({'added': True})
 
     return JsonResponse({'error': 'Unauthorized'}, status=401)
-
 
 def search_products(request):
     query = request.GET.get('q')
@@ -134,7 +145,6 @@ def sales_inquiry(request):
         form = SalesInquiryForm()
     return render(request, 'your_template.html', {'form': form})
 
-
 def request_demo(request):
     if request.method == 'POST':
         form = RequestDemoForm(request.POST)
@@ -146,8 +156,7 @@ def request_demo(request):
 
     return render(request, 'your_template.html', {'form': form})
 
-from collections import defaultdict
-# Create your views here.
+
 def home(request):
     sunscreens = Product.objects.filter(category=1)[:10]
     print(sunscreens)
@@ -289,7 +298,7 @@ def cart_view(request):
 #     else:
 #         count = 0
 #     return {'cart_count': count}
-from decimal import Decimal
+
 def place_order(request):
     cart_items = Cart.objects.filter(user=request.user)
 
@@ -309,9 +318,7 @@ def place_order(request):
     request.session['total_price'] = float(total_price)
     # messages.success(request, "Your order has been placed successfully!")
     return redirect('payment')  # You can show a simple success page
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from .models import Order
+
 
 @login_required(login_url='login')
 def order_list(request):
@@ -321,19 +328,157 @@ def order_list(request):
     }
     return render(request, 'order_list.html', context)
 
+from django.shortcuts import render, redirect
+from instamojo_wrapper import Instamojo
+
+# Instamojo test credentials
+API_KEY = '801643e8bf855eeff0252a0b03df48e5'
+AUTH_TOKEN = '970dd00bcc5ba487a7f13687cef69dda'
+# ENDPOINT = 'https://test.instamojo.com/api/1.1/'
+ENDPOINT = 'https://www.instamojo.com/api/1.1/'
+
+
+api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint=ENDPOINT)
+
 def payment(request):
     total_price = request.session.get('total_price', 0)
+
+    # Create payment request with Instamojo
+    response = api.payment_request_create(
+        amount=str(total_price),
+        purpose='Order Payment',
+        buyer_name='Test User',
+        send_email=True,
+        email='test@example.com',  # You can make this dynamic
+        redirect_url='http://localhost:8000/payment-success/'
+        # redirect_url=use
+
+    )
+
+    payment_url = response['payment_request']['longurl']
+    return redirect(payment_url)
+
+def payment_success(request):
+    payment_id = request.GET.get('payment_id')
+    status = request.GET.get('payment_status')
+
+    return render(request, 'payment_success.html', {
+        'payment_id': payment_id,
+        'status': status,
+    })
+
+INSTAMOJO_SALT = '2d7e011ecacc4211af1018e09d7b466a'  # From Instamojo dashboard
+
+@csrf_exempt
+def instamojo_webhook(request):
+    if request.method != "POST":
+        return HttpResponse(status=405)
+
+    try:
+        post_data = request.POST.copy()
+        received_mac = post_data.pop('mac', [None])[0]
+
+        sorted_keys = sorted(post_data)
+        message = "|".join(str(post_data[key]) for key in sorted_keys)
+
+        # Calculate HMAC to verify authenticity
+        generated_mac = hmac.new(
+            INSTAMOJO_SALT.encode('utf-8'),
+            message.encode('utf-8'),
+            hashlib.sha1
+        ).hexdigest()
+
+        if received_mac != generated_mac:
+            return HttpResponse("MAC mismatch", status=400)
+
+        # Extract payment info
+        payment_status = post_data.get("status")
+        payment_id = post_data.get("payment_id")
+        buyer_email = post_data.get("buyer")
+
+        if payment_status == "Credit":
+            # ✅ Payment was successful — process your logic
+            print(f"✅ Payment confirmed for {buyer_email}, ID: {payment_id}")
+            # Example: update order status in DB here
+
+        return HttpResponse("Webhook received", status=200)
+
+    except Exception as e:
+        return HttpResponse(f"Error: {str(e)}", status=500)
+
+# def payment(request):
+#     total_price = request.session.get('total_price', 0)
+
+#     payload = {
+#         'purpose': 'Order Payment',
+#         'amount': str(total_price),
+#         'buyer_name': 'John Doe',
+#         'email': 'john@example.com',
+#         'phone': '9270707122',
+#         'redirect_url': 'http://localhost:8000/payment-success/', #'https://yourdomain.com/payment-success/',
+#         'allow_repeated_payments': 'False',
+#         'send_email': 'True',
+#         'send_sms': 'True',
+#     }
+
+#     headers = {
+#         'X-Api-Key': API_KEY,
+#         'X-Auth-Token': AUTH_TOKEN
+#     }
+
+#     response = requests.post(
+#         'https://www.instamojo.com/api/1.1/payment-requests/',
+#         data=payload,
+#         headers=headers
+#     )
+
+#     try:
+#         response_data = response.json()
+#     except Exception:
+#         return HttpResponse("Invalid response from Instamojo")
+
+#     if response_data.get('success'):
+#         payment_url = response_data['payment_request']['longurl']
+#         return redirect(payment_url)
+#     else:
+#         error_msg = response_data.get('message', 'Unknown error')
+#         return HttpResponse(f"Payment request failed: {error_msg}")
+
+
+# def payment(request):
+#     total_price = request.session.get('total_price', 0)
     
-    context = {
-        'total_price': total_price,
-    }
-    return render(request, 'payment.html', context)
+#     context = {
+#         'total_price': total_price,
+#     }
+#     return render(request, 'payment.html', context)
+
+# import razorpay
+# from django.conf import settings
+# from django.shortcuts import render
+
+# client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
+# def payment(request):
+#     total_price = float(request.session.get('total_price', 0))
+#     amount_paise = int(total_price * 100)
+
+#     payment = client.order.create({
+#         "amount": amount_paise,
+#         "currency": "INR",
+#         "payment_capture": 1
+#     })
+
+#     context = {
+#         'total_price': total_price,
+#         'razorpay_order_id': payment['id'],
+#         'razorpay_amount': amount_paise,
+#         'razorpay_key': settings.RAZORPAY_KEY_ID,
+#     }
+#     return render(request, 'payment.html', context)
 
 # def order_success(request):
 #     return render(request, 'order_success.html')
-
-from django.core.mail import send_mail
-from django.conf import settings
 
 def order_success(request):
     if request.user.is_authenticated:
@@ -405,9 +550,6 @@ def weightloss_coffee(request):
 def metabolism(request):
     return render(request, 'metabolism boost.html')
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import Product, Cart, Wishlist
 
 login_required(login_url='login')
 def add_to_wishlist(request, product_id):

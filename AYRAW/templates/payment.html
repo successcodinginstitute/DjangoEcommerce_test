@@ -28,14 +28,39 @@
     text-decoration: none;
     font-size: 14px;
     font-weight: bold;
+    cursor: pointer;
 }
 </style>
 
 <div class="payment-container">
     <h2>Proceed to Payment</h2>
-    <p>Total Amount: ₹{{ total_price }}</p>
+    <p>Total Amount: ₹{{ total_price|floatformat:2 }}</p>
     <p>Select a payment method and confirm your order.</p>
-    <a href="{% url 'order_success' %}" class="pay-now-btn">Pay Now</a>
+    <button id="rzp-button" class="pay-now-btn">Pay Now</button>
 </div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{ razorpay_key }}",
+        "amount": "{{ razorpay_amount }}", // in paise
+        "currency": "INR",
+        "name": "Your Company Name",
+        "description": "Test Transaction",
+        "order_id": "{{ razorpay_order_id }}",
+        "handler": function (response) {
+            alert("Payment Successful!");
+            window.location.href = "{% url 'order_success' %}";
+        },
+        "theme": {
+            "color": "#F37254"
+        }
+    };
+    var rzp = new Razorpay(options);
+    document.getElementById('rzp-button').onclick = function(e){
+        rzp.open();
+        e.preventDefault();
+    }
+</script>
 
 {% endblock %}
