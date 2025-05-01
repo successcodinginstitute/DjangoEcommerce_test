@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<style>
+.payment-container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.payment-container h2 {
+    color: hotpink;
+    margin-bottom: 20px;
+}
+.payment-container p {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+.pay-now-btn {
+    background: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+</style>
+
+<div class="payment-container">
+    <h2>Proceed to Payment</h2>
+    <p>Total Amount: ₹{{ total_price }}</p>
+    <p>Select a payment method and confirm your order.</p>
+    <a href="{% url 'order_success' %}" class="pay-now-btn">Pay Now</a>
+</div>
+
+{% endblock %}

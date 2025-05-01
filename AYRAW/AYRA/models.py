@@ -85,6 +85,8 @@ class Order(models.Model):
     ], default='Pending')
     payment_id = models.CharField(max_length=100, null=True, blank=True)
     order_date = models.DateTimeField(auto_now_add=True)  # Ensure this field exists
+    payment_status = models.CharField(max_length=100, null=True, blank=True)  # Ensure this field exists
+
 
     def __str__(self):
         return f"Order {self.id} - {self.user.username}"

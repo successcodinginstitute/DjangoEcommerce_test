@@ -302,16 +302,21 @@ def place_order(request):
         messages.error(request, "Your cart is empty.")
         return redirect('cart_view')
     total_price = Decimal('0.00')  # initialize as Decimal
+    order_ids = []
     for item in cart_items:
-        Order.objects.create(
+        order =Order.objects.create(
             user=request.user,
             product=item.product,
             total_price=item.product.price * item.quantity,
             status='Pending',
+            payment_status='Pending',
         )
         total_price += item.product.price * item.quantity
+        order_ids.append(order.id)
+
         item.delete()
     request.session['total_price'] = float(total_price)
+    request.session['order_ids'] = order_ids 
     # messages.success(request, "Your order has been placed successfully!")
     return redirect('payment')  # You can show a simple success page
 
@@ -338,7 +343,8 @@ api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint=ENDPOINT)
 
 def payment(request):
     total_price = request.session.get('total_price', 0)
-
+    order_ids = request.session.get('order_ids', [])
+    request.session['order_ids'] = order_ids
     # Create payment request with Instamojo
     response = api.payment_request_create(
         amount=str(total_price),
@@ -357,6 +363,12 @@ def payment(request):
 def payment_success(request):
     payment_id = request.GET.get('payment_id')
     status = request.GET.get('payment_status')
+    order_ids = request.session.get('order_ids', [])
+
+    # Update the orders' status
+    Order.objects.filter(id__in=order_ids).update(
+        payment_status='Success'
+    )
 
     return render(request, 'payment_success.html', {
         'payment_id': payment_id,
