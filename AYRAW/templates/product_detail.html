@@ -67,7 +67,7 @@
 
   /* Action buttons */
   .action-buttons button {
-      padding: 12px 24px;
+      padding: 12px 12px;
       font-size: 1rem;
       border-radius: 8px;
       transition: all 0.3s ease;
@@ -95,7 +95,7 @@
   .product-details-wrapper {
       display: flex;
       flex-wrap: wrap; /* Allow content to wrap on smaller screens */
-      gap: 2rem;
+      gap: 1rem;
       align-items: flex-start;
   }
   .words{
@@ -136,7 +136,8 @@
 
       .action-buttons button {
           font-size: 0.9rem;
-          padding: 10px 20px;
+          padding: 10px 10px;
+          /* padding: 10px 20px; */
       }
   }
 
@@ -147,10 +148,10 @@
           gap: 1.5rem;
       }
 
-      .product-img {
+      /* .product-img {
           width: 200px;  /* Slightly smaller image for tablets */
-          height: 200px;
-      }
+          /* height: 200px; */
+      /* } */ 
 
       .product-info {
           width: 60%;
@@ -166,7 +167,7 @@
 
       .action-buttons button {
           font-size: 1rem;
-          padding: 12px 24px;
+          /* padding: 12px 24px; */
       }
   }
 
@@ -195,9 +196,14 @@
 
       .action-buttons button {
           font-size: 1rem;
-          padding: 12px 24px;
+          padding: 12px 14px;
       }
   }
+  .action-buttons{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  } 
 </style>
 
 
@@ -229,7 +235,7 @@
          
         
         <!-- Product Details -->
-        <div class="md:w-1/2 p-6" style="height:100%; max-width:50%;"> 
+        <div class="md:w-1/2 p-6" style="height:100%;"> 
           <h2 class="text-3xl font-bold mb-4">{{ product.name }}1</h2>
           <p class="text-xl text-green-600 font-semibold mb-4">₹{{ product.price }}</p>
           <p class="text-gray-700 mb-6 words">{{ product.description }}</p>
@@ -237,7 +243,7 @@
           {% comment %} <a href="{% url 'place_order' %}" class="bg-blue-600 text-blue px-6 py-2 rounded hover:bg-blue-700 transition">
             Buy Now
           </a> {% endcomment %}
-          <div class="action-buttons " style="display: flex; gap: 2rem;">
+          <div class="action-buttons ">
             <a href="{% url 'add_to_cart' product.id %}" style="text-decoration: none;">
               <div class="add-to-cart">
                 <button type="button" class="btn btn-primary">Buy Now</button>

@@ -17,6 +17,14 @@
         gap: 20px;
         flex-wrap: nowrap; /* ensures horizontal scroll */
       }
+      @media (max-width: 400px){
+            .carousel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            min-width: 100%;
+          }
+      }
       
     .product-card {
         flex: 0 0 auto;
